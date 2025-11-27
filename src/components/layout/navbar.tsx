@@ -1,254 +1,259 @@
 "use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+import { AnimatePresence, motion } from "framer-motion";
+import { Menu, ChevronsDown, Zap } from "lucide-react";
 
-const products = [
-  {
-    title: "Tişört Baskı",
-    href: "/tisort",
-    description: "Özel tasarım tişört baskı hizmetleri",
-    image: "/t-shirt-printing.jpg",
-  },
-  {
-    title: "Sweatshirt",
-    href: "/sweatshirt",
-    description: "Kaliteli sweatshirt baskı çözümleri",
-    image: "/sweatshirt-printing.jpg",
-  },
-  {
-    title: "Hoodie",
-    href: "/hoodie",
-    description: "Kapşonlu sweatshirt baskı",
-    image: "/hoodie-printing.jpg",
-  },
-  {
-    title: "Çanta",
-    href: "/canta",
-    description: "Bez çanta ve tote bag baskı",
-    image: "/tote-bag-printing.jpg",
-  },
-  {
-    title: "Şapka",
-    href: "/sapka",
-    description: "Kep ve şapka baskı seçenekleri",
-    image: "/cap-printing.jpg",
-  },
-  {
-    title: "Kupa",
-    href: "/kupa",
-    description: "Özel tasarım kupa bardak baskı",
-    image: "/mug-printing.jpg",
-  },
-];
+type MenuKey = "tum" | "ekspres" | "kartvizit" | "reklam" | null;
 
-const services = [
-  {
-    title: "Dijital Baskı",
-    href: "/dijital-baski",
-    description:
-      "Yüksek kaliteli dijital baskı teknolojisi ile detaylı ve renkli baskılar",
-  },
-  {
-    title: "Serigrafi",
-    href: "/serigrafi",
-    description:
-      "Geleneksel serigrafi baskı hizmetleri, dayanıklı ve profesyonel sonuçlar",
-  },
-  {
-    title: "Sublimation",
-    href: "/sublimation",
-    description: "Parlak ve canlı renklerde sublimation baskı çözümleri",
-  },
-  {
-    title: "Transfer Baskı",
-    href: "/transfer-baski",
-    description: "Hızlı ve ekonomik transfer baskı seçenekleri",
-  },
-  {
-    title: "Nakış",
-    href: "/nakis",
-    description: "Profesyonel nakış işlemleri ile zarif ve kalıcı sonuçlar",
-  },
-  {
-    title: "Lazer Kesim",
-    href: "/lazer-kesim",
-    description: "Hassas lazer kesim ve gravür hizmetleri",
-  },
-];
+const menuData = {
+    tum: {
+        title: "Tüm Ürünler",
+        categories: [
+            "Kartvizitler",
+            "El İlanları",
+            "Kurumsal Ürünler",
+            "Reklam Ürünleri",
+            "Promosyon Ürünleri",
+            "Restoran / Kafe Ürünleri",
+            "İç-Dış Mekan Reklam",
+            "Ambalaj & Paketleme",
+        ],
+        items: [
+            "Standart Kartvizit",
+            "Kare Kartvizit",
+            "Gofreli Kartvizit",
+            "Oval Kartvizit",
+            "Laminasyonlu Kartvizit",
+            "Şeffaf Kartvizit",
+            "Kabartma Laklı Kartvizit",
+            "Ahşap Kartvizit",
+            "PVC Kartvizit",
+        ],
+        images: [
+            {
+                title: "Kartvizit Kampanyası",
+                src: "https://www.bidolubaski.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstandard-card.123.png&w=256&q=75",
+            },
+            {
+                title: "Premium Kartvizit",
+                src: "https://www.bidolubaski.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsoft-card.123.png&w=256&q=75",
+            },
+        ],
+    },
 
-const categories = [
-  {
-    title: "Erkek Giyim",
-    href: "/erkek",
-    items: [
-      { name: "Tişört", href: "/erkek/tisort" },
-      { name: "Sweatshirt", href: "/erkek/sweatshirt" },
-      { name: "Hoodie", href: "/erkek/hoodie" },
-      { name: "Polo", href: "/erkek/polo" },
-    ],
-  },
-  {
-    title: "Kadın Giyim",
-    href: "/kadin",
-    items: [
-      { name: "Tişört", href: "/kadin/tisort" },
-      { name: "Sweatshirt", href: "/kadin/sweatshirt" },
-      { name: "Crop Top", href: "/kadin/crop" },
-      { name: "Elbise", href: "/kadin/elbise" },
-    ],
-  },
-  {
-    title: "Çocuk Giyim",
-    href: "/cocuk",
-    items: [
-      { name: "Çocuk Tişört", href: "/cocuk/tisort" },
-      { name: "Body", href: "/cocuk/body" },
-      { name: "Sweatshirt", href: "/cocuk/sweatshirt" },
-    ],
-  },
-  {
-    title: "Aksesuarlar",
-    href: "/aksesuarlar",
-    items: [
-      { name: "Çanta", href: "/aksesuarlar/canta" },
-      { name: "Şapka", href: "/aksesuarlar/sapka" },
-      { name: "Kupa", href: "/aksesuarlar/kupa" },
-      { name: "Anahtarlık", href: "/aksesuarlar/anahtarlik" },
-    ],
-  },
-  {
-    title: "Toplu Sipariş",
-    href: "/toplu",
-    items: [
-      { name: "Kurumsal", href: "/toplu/kurumsal" },
-      { name: "Etkinlik", href: "/toplu/etkinlik" },
-      { name: "Promosyon", href: "/toplu/promosyon" },
-    ],
-  },
-  {
-    title: "Özel Tasarım",
-    href: "/ozel",
-    items: [
-      { name: "Tasarım Yükle", href: "/ozel/yukle" },
-      { name: "Tasarım Oluştur", href: "/ozel/olustur" },
-    ],
-  },
-];
+    ekspres: {
+        title: "Ekspres Baskı",
+        icon: <Zap className="text-orange-500" size={16} />,
+        categories: ["Ekspres Kartvizit", "Ekspres Afiş", "Ekspres Poster"],
+        items: [
+            "Ekspres Kartvizit",
+            "Ekspres Antetli Kağıt",
+            "Ekspres Kitap Ayracı",
+            "Ekspres Amerikan Servis",
+            "Ekspres Davetiye",
+            "Ekspres Cepli Dosya",
+            "Ekspres Sunum Dosyası",
+            "Ekspres Poşet / Çanta",
+            "Ekspres Insert",
+        ],
+        images: [
+            {
+                title: "Ekspres Kartvizit",
+                src: "https://www.bidolubaski.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexp-card.553.png&w=256&q=75",
+            },
+            {
+                title: "Ekspres Insert",
+                src: "https://www.bidolubaski.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fexp-insert.553.png&w=256&q=75",
+            },
+        ],
+    },
+
+    kartvizit: {
+        title: "Kartvizitler",
+        categories: [
+            "Standart Kartvizit",
+            "Kare Kartvizit",
+            "Oval Kartvizit",
+            "Varak Kartvizit",
+            "Kabartma Laklı Kartvizit",
+            "Ahşap Kartvizit",
+        ],
+        items: [
+            "PVC Kartvizit",
+            "Şeffaf Kartvizit",
+            "Tuale Fantazi",
+            "Gofreli Kartvizit",
+            "Laklı Kartvizit",
+            "Soft Touch Kartvizit",
+        ],
+        images: [
+            {
+                title: "Standart Kartvizit",
+                src: "https://www.bidolubaski.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fstd-card.432.png&w=256&q=75",
+            },
+            {
+                title: "Soft Touch Kartvizit",
+                src: "https://www.bidolubaski.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsoft-card.432.png&w=256&q=75",
+            },
+        ],
+    },
+
+    reklam: {
+        title: "İç-Dış Mekan Reklam",
+        categories: ["Vinil", "Branda", "Mesh", "Folyo", "Afiş"],
+        items: [
+            "Vinil Baskı",
+            "Mesh Baskı",
+            "One Way Vision",
+            "Folyo Baskı",
+            "Poster Baskı",
+            "Billboard Baskı",
+        ],
+        images: [
+            {
+                title: "Vinil Baskı",
+                src: "https://www.bidolubaski.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvinyl.332.png&w=256&q=75",
+            },
+            {
+                title: "Folyo Baskı",
+                src: "https://www.bidolubaski.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Ffolyo.332.png&w=256&q=75",
+            },
+        ],
+    },
+};
 
 export default function Navbar() {
-  return (
-    <div className="border-t">
-      <div className="container mx-auto">
-        <NavigationMenu className="max-w-full">
-          <NavigationMenuList className="flex-wrap justify-start gap-1">
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Ürünler</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <div className="container w-full p-6">
-                  <div className="grid grid-cols-3 gap-6">
-                    {products.map((product) => (
-                      <Link
-                        key={product.title}
-                        href={product.href}
-                        className="group block space-y-3 rounded-lg border bg-card p-4 transition-colors hover:bg-accent"
-                      >
-                        <div className="aspect-video overflow-hidden rounded-md bg-muted">
-                          <Image
-                            src={product.image || "/placeholder.svg"}
-                            alt={product.title}
-                            width={300}
-                            height={200}
-                            className="object-cover transition-transform group-hover:scale-105"
-                          />
+    const [open, setOpen] = useState<MenuKey>(null);
+
+    const handleHover = (key: MenuKey) => setOpen(key);
+    const closeMenu = () => setOpen(null);
+
+    return (
+        <div className="relative w-full bg-white">
+            <div className="mx-auto max-w-[75%] px-4 py-3 flex items-center">
+
+                {/* SOL */}
+                <div className="flex items-center gap-8">
+
+                    <button
+                        onMouseEnter={() => handleHover("tum")}
+                        className="flex items-center gap-2 text-[15px] font-medium text-gray-700"
+                    >
+                        <Menu size={18} />
+                        Tüm Ürünler
+                        <ChevronsDown size={14} />
+                    </button>
+
+                    <button
+                        onMouseEnter={() => handleHover("ekspres")}
+                        className="flex items-center gap-1 text-[15px] font-medium text-gray-700"
+                    >
+                        <Zap className="text-orange-500" size={16} />
+                        Ekspres Baskı
+                        <ChevronsDown size={14} />
+                    </button>
+
+                    <button
+                        onMouseEnter={() => handleHover("kartvizit")}
+                        className="flex items-center gap-1 text-[15px] font-medium text-gray-700"
+                    >
+                        Kartvizitler
+                        <ChevronsDown size={14} />
+                    </button>
+
+                    <button
+                        onMouseEnter={() => handleHover("reklam")}
+                        className="flex items-center gap-1 text-[15px] font-medium text-gray-700"
+                    >
+                        İç-Dış Mekan Reklam
+                        <ChevronsDown size={14} />
+                    </button>
+                </div>
+
+                {/* SAĞ */}
+                <div className="ml-auto flex items-center gap-6 text-[15px] font-medium">
+                    <Link href="/yeni-urunler" className="flex items-center gap-1">
+                        Yeni Ürünler <span className="text-pink-500">💠</span>
+                    </Link>
+                    <Link href="/kampanyalar">Kampanyalar</Link>
+                </div>
+            </div>
+
+            {/* DROPDOWN */}
+            <AnimatePresence>
+                {open && (
+                    <motion.div
+                        key={open}
+                        initial={{ opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.15 }}
+                        onMouseLeave={closeMenu}
+                        className="absolute left-0 right-0 bg-white shadow-xl border-b z-50"
+                    >
+                        <div className="mx-auto max-w-[75%] py-6 grid grid-cols-12 gap-8">
+
+                            {/* SOL LİSTE */}
+                            <div className="col-span-3 space-y-2 border-r pr-4">
+                                <h3 className="font-medium text-gray-700 mb-2">
+                                    {menuData[open].title}
+                                </h3>
+
+                                {menuData[open].categories.map((c) => (
+                                    <div
+                                        key={c}
+                                        className="p-2 rounded-md hover:bg-gray-100 cursor-pointer text-[14px]"
+                                    >
+                                        {c}
+                                    </div>
+                                ))}
+
+                                <button className="mt-4 text-blue-600 font-medium flex items-center gap-1 text-[14px]">
+                                    Tüm {menuData[open].title} Ürünleri →
+                                </button>
+                            </div>
+
+                            {/* ORTA */}
+                            <div className="col-span-6 grid grid-cols-3 gap-4">
+                                {menuData[open].items.map((item) => (
+                                    <div
+                                        key={item}
+                                        className="text-[14px] text-gray-700 hover:text-blue-600 cursor-pointer"
+                                    >
+                                        {item}
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* SAĞ */}
+                            <div className="col-span-3 space-y-4">
+                                {menuData[open].images.map((img) => (
+                                    <div
+                                        key={img.title}
+                                        className="rounded-xl border p-3 hover:shadow-md transition cursor-pointer"
+                                    >
+                                        <Image
+                                            alt={img.title}
+                                            src={img.src}
+                                            width={300}
+                                            height={200}
+                                            className="rounded-md object-cover w-full h-28"
+                                        />
+                                        <p className="mt-2 text-[14px] text-gray-700 text-center">
+                                            {img.title}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+
                         </div>
-                        <div>
-                          <h3 className="font-semibold text-foreground">
-                            {product.title}
-                          </h3>
-                          <p className="text-sm text-muted-foreground">
-                            {product.description}
-                          </p>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Hizmetler</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <div className="container-fluid p-6">
-                  <div className="grid grid-cols-2 gap-4">
-                    {services.map((service) => (
-                      <Link
-                        key={service.title}
-                        href={service.href}
-                        className="group block space-y-2 rounded-lg border bg-card p-6 transition-colors hover:bg-accent"
-                      >
-                        <h3 className="font-semibold text-foreground">
-                          {service.title}
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          {service.description}
-                        </p>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Kategoriler</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <div className="container-fluid p-6">
-                  <div className="grid grid-cols-3 gap-6">
-                    {categories.map((category) => (
-                      <div
-                        key={category.title}
-                        className="space-y-3 rounded-lg border bg-card p-6"
-                      >
-                        <h3 className="font-semibold text-foreground">
-                          <Link
-                            href={category.href}
-                            className="hover:text-primary transition-colors"
-                          >
-                            {category.title}
-                          </Link>
-                        </h3>
-                        <ul className="space-y-2">
-                          {category.items.map((item) => (
-                            <li key={item.name}>
-                              <Link
-                                href={item.href}
-                                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                              >
-                                {item.name}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-
-          </NavigationMenuList>
-        </NavigationMenu>
-      </div>
-    </div>
-  );
+        </div>
+    );
 }

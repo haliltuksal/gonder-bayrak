@@ -7,16 +7,9 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const useFlowbiteCarousel = () => {
     useEffect(() => {
-        const load = async () => {
-            if (typeof window !== "undefined") {
-                const { initCarousels } = await import("flowbite");
-                if (typeof initCarousels === "function") {
-                    initCarousels();
-                }
-            }
-        };
-
-        load();
+        if (typeof window !== "undefined") {
+            import("flowbite").then(({ initCarousels }) => initCarousels());
+        }
     }, []);
 };
 
@@ -34,19 +27,17 @@ export default function PremiumCarousel() {
     return (
         <div
             id="default-carousel"
-            className="relative w-full mx-auto max-w-[75%] pb-7"
+            className="relative w-full mx-auto max-w-[75%] pb-7 pt-2"
             data-carousel="slide"
         >
             <div className="relative h-56 overflow-hidden rounded-2xl md:h-96">
+
                 {images.map((src, i) => (
                     <div
                         key={i}
-                        className={
-                            i === 0
-                                ? "duration-700 ease-in-out relative w-full h-full"
-                                : "hidden duration-700 ease-in-out relative w-full h-full"
-                        }
-                        data-carousel-item={i === 0 ? "active" : undefined}
+                        data-carousel-item={i === 0 ? "active" : ""}
+                        className={`absolute inset-0 transition-transform duration-700 ease-in-out
+              ${i === 0 ? "translate-x-0" : "translate-x-full"}`}
                     >
                         <Image
                             src={src}
@@ -56,16 +47,16 @@ export default function PremiumCarousel() {
                         />
                     </div>
                 ))}
+
             </div>
 
-            <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+            <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3">
                 {images.map((_, i) => (
                     <button
                         key={i}
                         type="button"
-                        className="w-3 h-3 rounded-full bg-white/70 hover:bg-white"
-                        aria-label={`Slide ${i + 1}`}
                         data-carousel-slide-to={i}
+                        className="w-3 h-3 rounded-full bg-white/70 hover:bg-white"
                     />
                 ))}
             </div>
@@ -75,11 +66,7 @@ export default function PremiumCarousel() {
                 className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer"
                 data-carousel-prev
             >
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-full bg-white/40 backdrop-blur-md"
-                >
+                <Button variant="ghost" size="icon" className="rounded-full bg-white/40 backdrop-blur-md">
                     <ChevronLeft className="w-6 h-6 text-white" />
                 </Button>
             </button>
@@ -89,11 +76,7 @@ export default function PremiumCarousel() {
                 className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer"
                 data-carousel-next
             >
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-full bg-white/40 backdrop-blur-md"
-                >
+                <Button variant="ghost" size="icon" className="rounded-full bg-white/40 backdrop-blur-md">
                     <ChevronRight className="w-6 h-6 text-white" />
                 </Button>
             </button>
