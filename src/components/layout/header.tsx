@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -13,8 +15,7 @@ export default function Header() {
       <header className="w-full bg-white">
         <div className="mx-auto max-w-[75%] px-4 py-4">
 
-          <div className="flex items-center justify-between">
-
+          <div className="hidden lg:flex items-center justify-between">
             <Link href="/" className="inline-flex">
               <Image
                   src="https://www.bidolubaski.com/_next/static/media/logo.1cee344a.svg"
@@ -43,6 +44,39 @@ export default function Header() {
                 <ShoppingCartIcon />
                 Sepetim
               </Button>
+            </div>
+          </div>
+
+          <div className="lg:hidden flex flex-col gap-3">
+            <div className="flex items-center justify-between">
+              <Link href="/" className="inline-flex">
+                <Image
+                    src="https://www.bidolubaski.com/_next/static/media/logo.1cee344a.svg"
+                    alt="logo"
+                    width={200}
+                    height={28}
+                    className="h-[28px] w-auto"
+                />
+              </Link>
+
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" size="icon" className="h-10 w-10">
+                  <UserIcon size={20} />
+                </Button>
+
+                <Button variant="ghost" size="icon" className="h-10 w-10">
+                  <ShoppingCartIcon size={20} />
+                </Button>
+              </div>
+            </div>
+
+            <div className="w-full">
+              <InputGroup className="h-10 w-full">
+                <InputGroupInput placeholder="Ne bastırmak istiyorsunuz?" />
+                <InputGroupAddon align="inline-end">
+                  <SearchIcon />
+                </InputGroupAddon>
+              </InputGroup>
             </div>
           </div>
         </div>

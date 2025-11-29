@@ -6,9 +6,8 @@ import { Phone, Clock, MapPin, Facebook, Twitter, Linkedin, Instagram, ShieldChe
 export default function Footer() {
     return (
         <footer className="bg-white border-t">
-            <div className="mx-auto max-w-7xl px-4 py-12">
-                {/* TOP GRID */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+            <div className="mx-auto max-w-[75%] px-4 py-8 lg:py-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10">
 
                     {/* COLUMN 1 */}
                     <div>
@@ -93,11 +92,9 @@ export default function Footer() {
                     </div>
                 </div>
 
-                {/* DIVIDER */}
-                <hr className="my-10 border-gray-200" />
+                <hr className="my-6 lg:my-10 border-gray-200" />
 
-                {/* BOTTOM AREA */}
-                <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+                <div className="flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-6">
 
                     <div className="flex items-center gap-3 text-gray-700">
                         <ShieldCheck size={22} className="text-green-600" />

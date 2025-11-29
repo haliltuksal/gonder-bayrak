@@ -49,29 +49,25 @@ export default function BlogCarouselPremium() {
     const post = blogPosts[current];
 
     return (
-        <section className="w-full bg-[#f7f9fc] py-16">
-            <div className="max-w-7xl mx-auto px-4">
+        <section className="w-full bg-[#f7f9fc] py-8 lg:py-16">
+            <div className="mx-auto max-w-[75%] px-4">
 
-                {/* Başlık */}
-                <h2 className="text-3xl font-bold text-gray-900 mb-10">
+                <h2 className="text-xl lg:text-3xl font-bold text-gray-900 mb-6 lg:mb-10">
                     İLHAM VERİCİ BLOG İÇERİKLERİ
                 </h2>
 
                 <div className="relative flex items-center">
 
-                    {/* Sol ok */}
                     <button
                         onClick={prev}
-                        className="absolute -left-4 md:-left-8 z-20 h-10 w-10 rounded-full border bg-white shadow flex items-center justify-center hover:bg-gray-100"
+                        className="absolute -left-2 md:-left-4 lg:-left-8 z-20 h-8 w-8 md:h-10 md:w-10 rounded-full border bg-white shadow flex items-center justify-center hover:bg-gray-100"
                     >
                         ‹
                     </button>
 
-                    {/* İçerik */}
-                    <div className="w-full grid md:grid-cols-2 gap-6 items-center">
+                    <div className="w-full grid md:grid-cols-2 gap-4 lg:gap-6 items-center">
 
-                        {/* Görsel */}
-                        <div className="relative rounded-3xl overflow-hidden shadow-lg">
+                        <div className="relative rounded-xl lg:rounded-3xl overflow-hidden shadow-lg">
                             <Image
                                 src={post.image}
                                 alt={post.title}
@@ -81,15 +77,14 @@ export default function BlogCarouselPremium() {
                             />
                         </div>
 
-                        {/* Overlap İçerik Kartı */}
-                        <Card className="relative -ml-10 md:-ml-20 bg-white p-6 md:p-8 rounded-3xl shadow-xl border">
-                            <h3 className="text-2xl font-semibold mb-4">{post.title}</h3>
+                        <Card className="relative md:-ml-10 lg:-ml-20 bg-white p-4 md:p-6 lg:p-8 rounded-xl lg:rounded-3xl shadow-xl border">
+                            <h3 className="text-lg md:text-xl lg:text-2xl font-semibold mb-3 lg:mb-4">{post.title}</h3>
 
-                            <p className="text-gray-600 leading-relaxed mb-6 line-clamp-5">
+                            <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-4 lg:mb-6 line-clamp-3 md:line-clamp-5">
                                 {post.excerpt}
                             </p>
 
-                            <Button asChild>
+                            <Button asChild size="sm" className="md:size-default">
                                 <Link href={post.link} className="flex items-center gap-2">
                                     Yazıyı Oku →
                                 </Link>
@@ -97,10 +92,9 @@ export default function BlogCarouselPremium() {
                         </Card>
                     </div>
 
-                    {/* Sağ ok */}
                     <button
                         onClick={next}
-                        className="absolute -right-4 md:-right-8 z-20 h-10 w-10 rounded-full border bg-white shadow flex items-center justify-center hover:bg-gray-100"
+                        className="absolute -right-2 md:-right-4 lg:-right-8 z-20 h-8 w-8 md:h-10 md:w-10 rounded-full border bg-white shadow flex items-center justify-center hover:bg-gray-100"
                     >
                         ›
                     </button>

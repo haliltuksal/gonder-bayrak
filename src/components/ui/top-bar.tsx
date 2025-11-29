@@ -4,10 +4,9 @@ import Link from "next/link";
 
 export default function Topbar() {
     return (
-        <div className="w-full bg-white">
-            <div className="mx-auto max-w-[75%] flex justify-between items-center py-[6px]">
+        <div className="w-full bg-white hidden lg:block">
+            <div className="mx-auto max-w-[75%] flex justify-between items-center py-[6px] px-4">
 
-                {/* LEFT */}
                 <div className="flex items-center gap-5">
                     <Link
                         href="#"
@@ -31,7 +30,6 @@ export default function Topbar() {
                     </Link>
                 </div>
 
-                {/* RIGHT */}
                 <div className="flex items-center gap-5">
                     <Link
                         href="#"

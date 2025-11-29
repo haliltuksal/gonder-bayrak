@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 /*
 const logos = [
@@ -24,8 +24,24 @@ const logos = [
 
 export default function ReferenceCarousel() {
     const [startIndex, setStartIndex] = useState(0);
+    const [itemsPerSlide, setItemsPerSlide] = useState(5);
 
-    const itemsPerSlide = 5;
+    useEffect(() => {
+        const updateItemsPerSlide = () => {
+            if (window.innerWidth < 768) {
+                setItemsPerSlide(2);
+            } else if (window.innerWidth < 1024) {
+                setItemsPerSlide(3);
+            } else {
+                setItemsPerSlide(5);
+            }
+        };
+
+        updateItemsPerSlide();
+        window.addEventListener("resize", updateItemsPerSlide);
+        return () => window.removeEventListener("resize", updateItemsPerSlide);
+    }, []);
+
     const total = logos.length;
 
     const next = () => {
@@ -41,41 +57,37 @@ export default function ReferenceCarousel() {
     });
 
     return (
-        <section className="w-full bg-white py-10">
-            <div className="max-w-7xl mx-auto px-4">
+        <section className="w-full bg-white py-6 lg:py-10">
+            <div className="mx-auto max-w-[75%] px-4">
 
-                {/* Başlık */}
-                <h2 className="text-center text-2xl font-bold text-gray-900 mb-10">
+                <h2 className="text-center text-lg lg:text-2xl font-bold text-gray-900 mb-6 lg:mb-10">
                     REFERANSLAR
                 </h2>
 
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-2 lg:gap-0">
 
-                    {/* Sol ok */}
                     <button
                         onClick={prev}
-                        className="text-3xl text-gray-700 hover:text-gray-900 px-3"
+                        className="text-2xl lg:text-3xl text-gray-700 hover:text-gray-900 px-2 lg:px-3 flex-shrink-0"
                     >
                         ‹
                     </button>
 
-                    {/* Logo Alanı */}
-                    <div className="flex-grow flex justify-center gap-10">
+                    <div className="flex-grow flex justify-center gap-4 md:gap-6 lg:gap-10">
                         {visibleItems.map((logo) => (
                             <div key={logo.id} className="flex items-center justify-center">
                                 <img
                                     src={logo.src}
                                     alt={logo.alt}
-                                    className="h-10 opacity-60 hover:opacity-100 transition"
+                                    className="h-8 md:h-10 opacity-60 hover:opacity-100 transition"
                                 />
                             </div>
                         ))}
                     </div>
 
-                    {/* Sağ ok */}
                     <button
                         onClick={next}
-                        className="text-3xl text-gray-700 hover:text-gray-900 px-3"
+                        className="text-2xl lg:text-3xl text-gray-700 hover:text-gray-900 px-2 lg:px-3 flex-shrink-0"
                     >
                         ›
                     </button>

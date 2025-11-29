@@ -14,7 +14,7 @@ const categories = [
 const FeatureCategoryBar = () => {
     return (
         <section className="w-full bg-white py-10">
-            <div className="max-w-7xl mx-auto px-4">
+            <div className="mx-auto max-w-[75%] px-4">
 
                 <h2 className="text-xl font-bold text-gray-900 mb-6">
                     SEKTÖRLERE GÖRE ÜRÜNLER

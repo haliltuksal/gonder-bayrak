@@ -48,7 +48,7 @@ export default function ProductCarousel({products, title}: ProductCarouselProps)
 
     return (
         <section className="bg-gray-50 py-8 dark:bg-gray-900">
-            <div className="mx-auto max-w-9/12 px-4">
+            <div className="mx-auto max-w-[75%] px-4">
                 <div className="mb-8 flex items-center justify-between">
                     <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
                         {title}

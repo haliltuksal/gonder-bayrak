@@ -63,7 +63,7 @@ export default function FeatureBar() {
 
     return (
         <div className="w-full border-y py-4 bg-white dark:bg-gray-900">
-            <div className="max-w-screen-xl mx-auto px-4">
+            <div className="mx-auto max-w-[75%] px-4">
 
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
                     {features.map(item => (
